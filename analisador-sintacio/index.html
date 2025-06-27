@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/default.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Analisador Sintático</title>
+  </head>
+  <body>
+    <header>
+      <div class="content">
+        <h1>Analisador Sintático</h1>
+      </div>
+    </header>
+    <section id="main" class="content">
+      <div class="grammar-infos">
+        <div class="top-forms align-center">
+          <h3>Sentenças</h3>
+          <div class="insert">
+            <input
+              id="sentenca"
+              type="text"
+              placeholder="Digite a Sentença"
+              onDrop="return false"
+              oninput="initAutomaton()" />
+          </div>
+          <div class="validate">
+            <button id="tokenGenerate" onclick="criarSentenca()" class="btn-default">Gerar</button>
+            <button id="passoPasso" onclick="passoPasso()" class="btn-default" style="display: none;">Passo a Passo</button>
+            <button id="resolucaoDireta" onclick="resolucaoDireta()" class="btn-default" style="display: none;">Resolução Direta</button>
+          </div>
+          <p id="sentence"></p>
+        </div>
+        <div class="top-forms">
+          <div class="infos">
+            <h3 style="margin-bottom: 20px;">Gramática Infos</h3>
+            <div class="grammar">
+              <div class="info">
+                <h3>Gramática</h3>
+                <div>
+                  <span>S := aAB </span><br />
+                  <span>A := bB | cSa</span><br />
+                  <span>B := cSb | aCc</span><br />
+                  <span>C := aA | ε</span><br />
+                </div>
+              </div>
+              <div class="info">
+                <h3>First</h3>
+                <div>
+                  <span>S = {a}</span><br />
+                  <span>A = {b, c}</span><br />
+                  <span>B = {c, a}</span><br />
+                  <span>C = {a, ε}</span><br />
+                </div>
+              </div>
+              <div class="info">
+                <h3>Follow</h3>
+                <div>
+                  <span>S = {$, a, b}</span><br />
+                  <span>A = {c, a}</span><br />
+                  <span>B = {$, a, b, c}</span><br />
+                  <span>C = {c}</span><br />
+                </div>
+              </div>
+            </div>
+            <div class="parsing">
+              <h3>Tabela de Análise Preditiva</h3>
+              <div>
+                <table id="parsingTable" class="tg table" style="width: 100%">
+                  <th></th>
+                  <th>a</th>
+                  <th>b</th>
+                  <th>c</th>
+                  <th>$</th>
+                  <tr>
+                    <td>S</td>
+                    <td>S -> aAB</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>A</td>
+                    <td></td>
+                    <td>A -> bB</td>
+                    <td>A -> cSa</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>B</td>
+                    <td>B -> aCc</td>
+                    <td></td>
+                    <td>B -> cSb</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>C</td>
+                    <td>A -> aA</td>
+                    <td></td>
+                    <td>C -> ε</td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="bottom-forms">
+        <div class="table-wrapper">
+          <table id="resolucao" style="margin-left: 100px;" class="table"></table>
+          <div id="anchor"></div>
+        </div>
+      </div>
+    </section>
+    <footer></footer>
+</body>
+  <script src="js/default.js"></script>
+</html>
